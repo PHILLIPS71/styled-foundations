@@ -1,3 +1,1 @@
-const sum = (a: number, b: number) => a + b
-
-export default sum
+export { default as foundation } from '@/primitives/foundation'
