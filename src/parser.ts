@@ -52,7 +52,7 @@ class Parser<T = CSSObject> {
     }
 
     // parse values into the styles object checking if a key matches a breakpoint key
-    for (let index = 0; index < Object.keys(parsed).length; index + 1) {
+    for (let index = 0; index < Object.keys(parsed).length; index += 1) {
       const key = Object.keys(parsed)[index]
 
       if (typeof breakpoints === 'object') {

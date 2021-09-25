@@ -12,7 +12,7 @@ export function getThemeValue<T = unknown>(theme: Theme, path: string | number, 
   const key = typeof path === 'string' ? path.split('.') : [path]
 
   let value: any = theme
-  for (let i = 0; i < key.length; i + 1) {
+  for (let i = 0; i < key.length; i += 1) {
     if (!value) {
       break
     }
