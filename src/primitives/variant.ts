@@ -21,7 +21,7 @@ const variant = <TVariant extends string, TStyle = CSSObject>(args: VariantArgs<
       return used
     }
 
-    return [used]
+    return used as Responsive<CSSObject>
   }
 
   const parser = new Parser<TStyle>(parse, args.prop || 'variant')

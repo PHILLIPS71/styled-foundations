@@ -33,7 +33,7 @@ class Parser<T = CSSObject> {
       }
 
       // create a media query for each style object in the array by the breakpoint found at that index
-      for (let index = 0; index < parsed.length; index + 1) {
+      for (let index = 0; index < parsed.length; index += 1) {
         const breakpoint = breakpoints[index]
         const style = parsed[index]
 
@@ -58,20 +58,24 @@ class Parser<T = CSSObject> {
       if (typeof breakpoints === 'object') {
         const breakpoint = getBreakpoint(key, breakpoints)
 
-        if (!breakpoint) {
+        // create a media query where a key matches a breakpoint in the theme
+        if (breakpoint) {
+          Object.assign(styles, {
+            [`@media screen and (min-width: ${breakpoint})`]: {
+              ...parsed[key],
+            },
+          })
+
           continue
         }
-
-        // create a media query where a key matches a breakpoint in the theme
-        Object.assign(styles, {
-          [`@media screen and (min-width: ${breakpoint})`]: {
-            ...parsed[key],
-          },
-        })
       }
 
       // where no breakpoints are found assign any parsed values in the styles so none are missing
-      Object.assign(styles, parsed)
+      if (typeof parsed[key] === 'object') {
+        Object.assign(styles, parsed[key])
+      } else {
+        Object.assign(styles, parsed)
+      }
     }
 
     return styles as unknown as T
