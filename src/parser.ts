@@ -14,7 +14,7 @@ class Parser<T = CSSObject> {
   }
 
   parse = (props: Record<string, unknown>): T => {
-    const styles: Record<string, string | number> = {}
+    const styles: Array<CSSObject> = []
     const value = props[this.prop] as string
     const parsed = this.parser(value, props)
     const theme = getTheme(props)
@@ -38,7 +38,7 @@ class Parser<T = CSSObject> {
         const style = parsed[index]
 
         if (breakpoint) {
-          Object.assign(styles, {
+          styles.push({
             [`@media screen and (min-width: ${breakpoint})`]: {
               ...style,
             },
@@ -47,7 +47,7 @@ class Parser<T = CSSObject> {
       }
 
       // append first parsed value as a base since no styles will apply less than the size of first breakpoint
-      Object.assign(styles, parsed[0])
+      styles.push(parsed[0])
       return styles as unknown as T
     }
 
@@ -60,7 +60,7 @@ class Parser<T = CSSObject> {
 
         // create a media query where a key matches a breakpoint in the theme
         if (breakpoint) {
-          Object.assign(styles, {
+          styles.push({
             [`@media screen and (min-width: ${breakpoint})`]: {
               ...parsed[key],
             },
@@ -72,9 +72,9 @@ class Parser<T = CSSObject> {
 
       // where no breakpoints are found assign any parsed values in the styles so none are missing
       if (typeof parsed[key] === 'object') {
-        Object.assign(styles, parsed[key])
+        styles.push(parsed[key])
       } else {
-        Object.assign(styles, parsed)
+        styles.push(parsed)
       }
     }
 
