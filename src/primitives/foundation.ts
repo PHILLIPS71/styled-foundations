@@ -38,38 +38,28 @@ const foundation = <TTheme, T = CSSObject>(args: FoundationArgs<TTheme>) => {
       values.push(value)
     }
 
-    if (Array.isArray(value)) {
-      values = value
-    }
+    if (typeof value === 'object') {
+      if (Array.isArray(value)) {
+        values = value
+      }
 
-    if (values.length > 0) {
-      const css: Responsive<CSSObject> = []
-
-      values.forEach((item) => {
-        const style = {} as CSSObject
-
-        Object.keys(args.properties).forEach((key) => {
-          const property = args.properties[key as keyof CSSProperties] as FoundationProperty<TTheme>
-          style[key] = getPropertyValue(item, property, theme)
+      if (!Array.isArray(value)) {
+        Object.keys(value).forEach((breakpoint) => {
+          values.push(value[breakpoint])
         })
-
-        css.push(style)
-      })
-
-      return css
+      }
     }
 
-    const css: Responsive<CSSObject> = {}
-    Object.keys(value).forEach((breakpoint) => {
+    const css: Responsive<CSSObject> = []
+    values.forEach((item) => {
       const style = {} as CSSObject
 
       Object.keys(args.properties).forEach((key) => {
         const property = args.properties[key as keyof CSSProperties] as FoundationProperty<TTheme>
-        // @ts-ignore https://github.com/microsoft/TypeScript/issues/17002
-        style[key] = getPropertyValue(value[breakpoint], property, theme)
+        style[key] = getPropertyValue(item, property, theme)
       })
 
-      css[breakpoint] = style
+      css.push(style)
     })
 
     return css

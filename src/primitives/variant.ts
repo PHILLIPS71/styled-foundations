@@ -21,7 +21,13 @@ const variant = <TVariant extends string, TStyle = CSSObject>(args: VariantArgs<
       return used
     }
 
-    return used as Responsive<CSSObject>
+    const values: Responsive<CSSObject> = []
+    Object.keys(used).forEach((breakpoint) => {
+      // @ts-ignore
+      values.push(used[breakpoint])
+    })
+
+    return values
   }
 
   const parser = new Parser<TStyle>(parse, args.prop || 'variant')

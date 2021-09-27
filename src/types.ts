@@ -4,8 +4,8 @@ export type CSSProperties = Properties<string | number>
 export type CSSPseudos = { [K in Pseudos]?: CSSObject }
 export type CSSObject = CSSProperties & CSSPseudos & { [key: string]: CSSObject | string | number | undefined }
 
-export type Responsive<T> = Array<T> | Record<string, T>
-export type ResponsiveValue = { [key: string]: string | number } | Array<string | number> | string | number
+export type Responsive<T> = Array<T>
+export type ResponsiveValue = Array<string | number> | Record<string, string | number> | string | number
 
 export type Breakpoints = Record<string, string> | Array<string>
 export type Theme = { [T in keyof CSSProperties]?: string | number } & {
