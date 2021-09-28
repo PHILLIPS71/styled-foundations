@@ -1,6 +1,7 @@
 import type { CSSObject, CSSProperties, Paths, Responsive, ResponsiveValue, Theme } from '@/types'
 
 import Parser from '@/parser'
+import { getOrderedBreakpointStyles } from '@/theme/breakpoint'
 import { getTheme, getThemeValue } from '@/theme/theme'
 
 type FoundationProperty<T> =
@@ -47,8 +48,9 @@ const foundation = <TTheme, T = CSSObject>(args: FoundationArgs<TTheme>) => {
       if (Array.isArray(value)) {
         values = value
       } else {
-        Object.keys(value).forEach((breakpoint) => {
-          values.push(value[breakpoint])
+        const ordered = getOrderedBreakpointStyles(value, theme)
+        Object.keys(ordered).forEach((breakpoint) => {
+          values.push(ordered[breakpoint])
         })
       }
     }

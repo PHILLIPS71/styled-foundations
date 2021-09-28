@@ -38,3 +38,34 @@ export const getBreakpoint = (value: string | number, breakpoints: Breakpoints):
       return null
   }
 }
+
+export const getOrderedBreakpoints = (breakpoints: Breakpoints): Breakpoints => {
+  if (Array.isArray(breakpoints)) {
+    return breakpoints.sort()
+  }
+
+  return Object.entries(breakpoints)
+    .sort((a, b) => parseInt(a[1], 10) - parseInt(b[1], 10))
+    .reduce(
+      (sorted, [k, v]) => ({
+        ...sorted,
+        [k]: v,
+      }),
+      {}
+    )
+}
+
+export const getOrderedBreakpointStyles = (value: Record<string, unknown>, theme?: Theme): Record<string, unknown> => {
+  const breakpoints = getOrderedBreakpoints(getBreakpoints(theme))
+
+  const keys = Object.keys(breakpoints)
+  return Object.entries(value)
+    .sort((a, b) => keys.indexOf(a[0]) - keys.indexOf(b[0]))
+    .reduce(
+      (sorted, [k, v]) => ({
+        ...sorted,
+        [k]: v,
+      }),
+      {}
+    )
+}

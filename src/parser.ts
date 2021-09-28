@@ -48,7 +48,6 @@ class Parser<T = CSSObject> {
 
     // append first parsed value as a base since no styles will apply less than the size of first breakpoint
     styles.push(parsed[0])
-    console.warn('STYLES', styles)
     return styles as unknown as T
   }
 }
