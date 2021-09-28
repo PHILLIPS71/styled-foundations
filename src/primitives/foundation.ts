@@ -26,7 +26,12 @@ const getPropertyValue = <T>(value: string | number, property: FoundationPropert
     return value
   }
 
-  return getThemeValue<Record<string, number>>(theme, property.theme)[value]
+  const themed = getThemeValue<Record<string, number>>(theme, property.theme)[value]
+  if (themed != null) {
+    return themed
+  }
+
+  return value
 }
 
 const foundation = <TTheme, T = CSSObject>(args: FoundationArgs<TTheme>) => {
@@ -41,9 +46,7 @@ const foundation = <TTheme, T = CSSObject>(args: FoundationArgs<TTheme>) => {
     if (typeof value === 'object') {
       if (Array.isArray(value)) {
         values = value
-      }
-
-      if (!Array.isArray(value)) {
+      } else {
         Object.keys(value).forEach((breakpoint) => {
           values.push(value[breakpoint])
         })
