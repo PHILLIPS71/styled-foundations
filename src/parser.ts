@@ -36,7 +36,7 @@ class Parser<S = CSSObject> {
       const breakpoint = breakpoints[index]
       let style: CSSObject | string = parsed[index]
 
-      // styled-components css utility function outputs styles as an array with the css string
+      // styled-components css helper function outputs styles as an array with the css string
       if (Array.isArray(style)) {
         if (typeof style[0] === 'string') {
           const css = style[0]

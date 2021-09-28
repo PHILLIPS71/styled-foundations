@@ -11,10 +11,10 @@ type FoundationProperty<T> =
       fallback: string | number
     }
 
-type FoundationArgs<K> = {
+type FoundationArgs<T> = {
   prop: string
   properties: {
-    [T in keyof CSSProperties]?: FoundationProperty<K>
+    [K in keyof CSSProperties]?: FoundationProperty<T>
   }
 }
 
@@ -35,7 +35,7 @@ const getPropertyValue = <T>(value: string | number, property: FoundationPropert
   return value
 }
 
-const foundation = <TTheme, T = CSSObject>(args: FoundationArgs<TTheme>) => {
+const foundation = <T, S = any>(args: FoundationArgs<T>) => {
   const parse = (value: ResponsiveValue, props: Record<string, unknown>): Responsive<CSSObject> => {
     const theme = getTheme(props)
     let values = []
@@ -60,7 +60,7 @@ const foundation = <TTheme, T = CSSObject>(args: FoundationArgs<TTheme>) => {
       const style = {} as CSSObject
 
       Object.keys(args.properties).forEach((key) => {
-        const property = args.properties[key as keyof CSSProperties] as FoundationProperty<TTheme>
+        const property = args.properties[key as keyof CSSProperties] as FoundationProperty<T>
         style[key] = getPropertyValue(item, property, theme)
       })
 
@@ -70,7 +70,7 @@ const foundation = <TTheme, T = CSSObject>(args: FoundationArgs<TTheme>) => {
     return css
   }
 
-  const parser = new Parser<T>(parse, args.prop)
+  const parser = new Parser<S>(parse, args.prop)
   return parser.parse
 }
 

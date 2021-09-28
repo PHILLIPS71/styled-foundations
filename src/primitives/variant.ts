@@ -4,14 +4,14 @@ import Parser from '@/parser'
 import { getOrderedBreakpointStyles } from '@/theme/breakpoint'
 import { getTheme } from '@/theme/theme'
 
-type VariantArgs<TVariant extends string> = {
+type VariantArgs<V extends string> = {
   prop?: string
   variants: {
-    [K in TVariant]: Responsive<CSSObject> | CSSObject
+    [K in V]: Array<CSSObject> | CSSObject
   }
 }
 
-const variant = <TVariant extends string, TStyle = CSSObject>(args: VariantArgs<TVariant>) => {
+const variant = <V extends string, S = any>(args: VariantArgs<V>) => {
   const parse = (value: ResponsiveValue, props: Record<string, unknown>): Responsive<CSSObject> => {
     if (typeof value !== 'string' || !Object.keys(args.variants).includes(value)) {
       console.error(`Invalid variant provided ${value} was expecting one of ${Object.keys(args.variants).join(', ')}`)
@@ -19,7 +19,7 @@ const variant = <TVariant extends string, TStyle = CSSObject>(args: VariantArgs<
     }
 
     const theme = getTheme(props)
-    const used = args.variants[value as TVariant]
+    const used = args.variants[value as V]
     if (Array.isArray(used)) {
       return used
     }
@@ -34,7 +34,7 @@ const variant = <TVariant extends string, TStyle = CSSObject>(args: VariantArgs<
     return values
   }
 
-  const parser = new Parser<TStyle>(parse, args.prop || 'variant')
+  const parser = new Parser<S>(parse, args.prop || 'variant')
   return parser.parse
 }
 
