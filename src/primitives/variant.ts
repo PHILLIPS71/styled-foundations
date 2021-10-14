@@ -12,7 +12,7 @@ type VariantArgs<V extends string> = {
 }
 
 const variant = <V extends string, S = any>(args: VariantArgs<V>) => {
-  const parse = (value: ResponsiveValue, props: Record<string, unknown>): Responsive<CSSObject> => {
+  const parse = (value: ResponsiveValue, props: any): Responsive<CSSObject> => {
     if (typeof value !== 'string' || !Object.keys(args.variants).includes(value)) {
       console.error(`Invalid variant provided ${value} was expecting one of ${Object.keys(args.variants).join(', ')}`)
       return []

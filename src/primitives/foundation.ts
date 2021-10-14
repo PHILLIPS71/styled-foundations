@@ -36,7 +36,7 @@ const getPropertyValue = <T>(value: string | number, property: FoundationPropert
 }
 
 const foundation = <T, S = any>(args: FoundationArgs<T>) => {
-  const parse = (value: ResponsiveValue, props: Record<string, unknown>): Responsive<CSSObject> => {
+  const parse = (value: ResponsiveValue, props: any): Responsive<CSSObject> => {
     const theme = getTheme(props)
     let values = []
 
