@@ -4,7 +4,7 @@ import Parser from '@/parser'
 import { getOrderedBreakpointStyles } from '@/theme/breakpoint'
 import { getTheme } from '@/theme/theme'
 
-type VariantArgs<V extends string> = {
+type VariantArgs<V extends string | number> = {
   prop?: string
   variants: {
     [K in V]: Array<CSSObject> | CSSObject
@@ -13,7 +13,12 @@ type VariantArgs<V extends string> = {
 
 const variant = <V extends string, S = any>(args: VariantArgs<V>) => {
   const parse = (value: ResponsiveValue, props: any): Responsive<CSSObject> => {
-    if (typeof value !== 'string' || !Object.keys(args.variants).includes(value)) {
+    if (typeof value !== 'string' && typeof value !== 'number') {
+      console.error(`Invalid variant type provided ${typeof value} was expecting a string or number`)
+      return []
+    }
+
+    if (!Object.keys(args.variants).includes(value.toString())) {
       console.error(`Invalid variant provided ${value} was expecting one of ${Object.keys(args.variants).join(', ')}`)
       return []
     }
