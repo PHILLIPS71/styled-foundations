@@ -4,16 +4,16 @@ import { getBreakpoints } from '@/theme/breakpoint'
 import { getTheme } from '@/theme/theme'
 
 class Parser<S = CSSObject> {
-  private parser: (value: ResponsiveValue, props: Record<string, unknown>) => Responsive<CSSObject>
+  private parser: (value: ResponsiveValue, props: any) => Responsive<CSSObject>
 
   private prop: string
 
-  constructor(parser: (value: ResponsiveValue, props: Record<string, unknown>) => Responsive<CSSObject>, prop: string) {
+  constructor(parser: (value: ResponsiveValue, props: any) => Responsive<CSSObject>, prop: string | Array<string>) {
     this.parser = parser
     this.prop = prop
   }
 
-  parse = (props: Record<string, unknown>): S => {
+  parse = (props: any): S => {
     const styles: Array<CSSObject | string> = []
     const value = props[this.prop] as string
     const parsed = this.parser(value, props)
