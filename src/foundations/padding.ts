@@ -7,7 +7,7 @@ export type PaddingProps = {
   padding?: ResponsiveValue
 }
 
-export const p = foundation({
+export const padding = foundation({
   prop: ['p', 'padding'],
   properties: {
     paddingTop: true,
@@ -22,7 +22,7 @@ export type PaddingXProps = {
   paddingX?: ResponsiveValue
 }
 
-export const px = foundation({
+export const paddingX = foundation({
   prop: ['px', 'paddingX'],
   properties: {
     paddingLeft: true,
@@ -35,7 +35,7 @@ export type PaddingYProps = {
   paddingY?: ResponsiveValue
 }
 
-export const py = foundation({
+export const paddingY = foundation({
   prop: ['py', 'paddingY'],
   properties: {
     paddingTop: true,
@@ -48,7 +48,7 @@ export type PaddingTopProps = {
   paddingTop?: ResponsiveValue
 }
 
-export const pt = foundation({
+export const paddingTop = foundation({
   prop: ['pt', 'paddingTop'],
   properties: {
     paddingTop: true,
@@ -60,7 +60,7 @@ export type PaddingRightProps = {
   paddingRight?: ResponsiveValue
 }
 
-export const pr = foundation({
+export const paddingRight = foundation({
   prop: ['pr', 'paddingRight'],
   properties: {
     paddingRight: true,
@@ -72,7 +72,7 @@ export type PaddingBottomProps = {
   paddingBottom?: ResponsiveValue
 }
 
-export const pb = foundation({
+export const paddingBottom = foundation({
   prop: ['pb', 'paddingBottom'],
   properties: {
     paddingBottom: true,
@@ -84,7 +84,7 @@ export type PaddingLeftProps = {
   paddingY?: ResponsiveValue
 }
 
-export const pl = foundation({
+export const paddingLeft = foundation({
   prop: ['pl', 'paddingLeft'],
   properties: {
     paddingLeft: true,

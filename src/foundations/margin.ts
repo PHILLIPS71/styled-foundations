@@ -7,7 +7,7 @@ export type MarginProps = {
   margin?: ResponsiveValue
 }
 
-export const m = foundation({
+export const margin = foundation({
   prop: ['m', 'margin'],
   properties: {
     marginTop: true,
@@ -22,7 +22,7 @@ export type MarginXProps = {
   marginX?: ResponsiveValue
 }
 
-export const mx = foundation({
+export const marginX = foundation({
   prop: ['mx', 'marginX'],
   properties: {
     marginLeft: true,
@@ -35,7 +35,7 @@ export type MarginYProps = {
   marginY?: ResponsiveValue
 }
 
-export const my = foundation({
+export const marginY = foundation({
   prop: ['my', 'marginY'],
   properties: {
     marginTop: true,
@@ -48,7 +48,7 @@ export type MarginTopProps = {
   marginTop?: ResponsiveValue
 }
 
-export const mt = foundation({
+export const marginTop = foundation({
   prop: ['mt', 'marginTop'],
   properties: {
     marginTop: true,
@@ -60,7 +60,7 @@ export type MarginRightProps = {
   marginRight?: ResponsiveValue
 }
 
-export const mr = foundation({
+export const marginRight = foundation({
   prop: ['mr', 'marginRight'],
   properties: {
     marginRight: true,
@@ -72,7 +72,7 @@ export type MarginBottomProps = {
   marginBottom?: ResponsiveValue
 }
 
-export const mb = foundation({
+export const marginBottom = foundation({
   prop: ['mb', 'marginBottom'],
   properties: {
     marginBottom: true,
@@ -84,7 +84,7 @@ export type MarginLeftProps = {
   marginY?: ResponsiveValue
 }
 
-export const ml = foundation({
+export const marginLeft = foundation({
   prop: ['ml', 'marginLeft'],
   properties: {
     marginLeft: true,
