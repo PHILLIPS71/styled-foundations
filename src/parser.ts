@@ -6,7 +6,7 @@ import { getTheme } from '@/theme/theme'
 class Parser<S = CSSObject> {
   private parser: (value: ResponsiveValue, props: any) => Responsive<CSSObject>
 
-  private prop: string
+  private prop: string | Array<string>
 
   constructor(parser: (value: ResponsiveValue, props: any) => Responsive<CSSObject>, prop: string | Array<string>) {
     this.parser = parser
@@ -14,8 +14,22 @@ class Parser<S = CSSObject> {
   }
 
   parse = (props: any): S => {
+    let styles: Array<CSSObject | string> = []
+
+    if (Array.isArray(this.prop)) {
+      this.prop.forEach((prop) => {
+        styles = styles.concat(this.run(prop, props) as unknown as Array<CSSObject | string>)
+      })
+
+      return styles as unknown as S
+    }
+
+    return this.run(this.prop, props)
+  }
+
+  run = (prop: string, props: any): S => {
     const styles: Array<CSSObject | string> = []
-    const value = props[this.prop] as string
+    const value = props[prop] as string
     const parsed = this.parser(value, props)
     const theme = getTheme(props)
     let breakpoints = getBreakpoints(theme)

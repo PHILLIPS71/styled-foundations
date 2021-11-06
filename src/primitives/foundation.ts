@@ -12,7 +12,7 @@ type FoundationProperty<T> =
     }
 
 type FoundationArgs<T> = {
-  prop: string
+  prop: string | Array<string>
   properties: {
     [K in keyof CSSProperties]?: FoundationProperty<T>
   }

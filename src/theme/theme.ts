@@ -1,6 +1,6 @@
 import type { Theme } from '@/types'
 
-export const getTheme = (props: Record<string, unknown>): Theme | undefined => {
+export const getTheme = (props: any): Theme | undefined => {
   if (props.theme) {
     return props.theme as Theme
   }
