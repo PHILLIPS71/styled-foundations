@@ -1,76 +1,56 @@
-import type { CSSObject, CSSProperties, Paths, Responsive, ResponsiveValue, Theme } from '@/types'
+import type { ParserConfig } from '@/parser'
+import type { Theme } from '@/theme/theme'
+import type { CSSProperties, Paths } from '@/types'
 
-import Parser from '@/parser'
-import { getOrderedBreakpointStyles } from '@/theme/breakpoint'
-import { getTheme, getThemeValue } from '@/theme/theme'
+import { Parser } from '@/parser'
+import { getThemeValue } from '@/theme/theme'
 
-type FoundationProperty<T> =
-  | boolean
-  | {
-      theme: Paths<T>
-      fallback: string | number
-    }
+type FoundationProperty<T> = {
+  theme: Paths<T>
+  fallback?: string | number
+}
 
-type FoundationArgs<T> = {
-  prop: string | Array<string>
+export type FoundationConfig<T> = ParserConfig & {
   properties: {
-    [K in keyof CSSProperties]?: FoundationProperty<T>
+    [K in keyof CSSProperties]?: FoundationProperty<T> | boolean
   }
 }
 
-const getPropertyValue = <T>(value: string | number, property: FoundationProperty<T>, theme?: Theme) => {
-  if (theme == null) {
-    return value
-  }
+const foundation = <T>(options: FoundationConfig<T> | Array<FoundationConfig<T>>) => {
+  const parse = (index: number, value: any, theme?: Theme): Record<string, any> => {
+    const styles: Record<string, any> = {}
 
-  if (typeof property === 'boolean') {
-    return value
-  }
+    const properties = Array.isArray(options) ? options[index].properties : options.properties
+    Object.keys(properties).forEach((property) => {
+      // get the style value for the current property
+      const style = Array.isArray(options)
+        ? options[index].properties[property as keyof CSSProperties]
+        : options.properties[property as keyof CSSProperties]
 
-  const themed = getThemeValue<Record<string, number>>(theme, property.theme)[value]
-  if (themed != null) {
-    return themed
-  }
+      // attempt to find a theme value if one has been provided
+      if (typeof style !== 'boolean' && style != null) {
+        const themed = getThemeValue(style.theme, value, theme)
 
-  return value
-}
+        if (themed != null) {
+          styles[property] = themed
+          return
+        }
 
-const foundation = <T, S = any>(args: FoundationArgs<T>) => {
-  const parse = (value: ResponsiveValue, props: any): Responsive<CSSObject> => {
-    const theme = getTheme(props)
-    let values = []
-
-    if (typeof value === 'string' || typeof value === 'number') {
-      values.push(value)
-    }
-
-    if (typeof value === 'object') {
-      if (Array.isArray(value)) {
-        values = value
-      } else {
-        const ordered = getOrderedBreakpointStyles(value, theme)
-        Object.keys(ordered).forEach((breakpoint) => {
-          values.push(ordered[breakpoint])
-        })
+        // if there is a fallback use that when a theme value cannot be found
+        if (style.fallback != null) {
+          styles[property] = style.fallback
+          return
+        }
       }
-    }
 
-    const css: Responsive<CSSObject> = []
-    values.forEach((item) => {
-      const style = {} as CSSObject
-
-      Object.keys(args.properties).forEach((key) => {
-        const property = args.properties[key as keyof CSSProperties] as FoundationProperty<T>
-        style[key] = getPropertyValue(item, property, theme)
-      })
-
-      css.push(style)
+      styles[property] = value
     })
 
-    return css
+    return styles
   }
 
-  const parser = new Parser<S>(parse, args.prop)
+  const foundations = Array.isArray(options) ? options : [options]
+  const parser = new Parser<Array<FoundationConfig<T>>>(foundations, parse)
   return parser.parse
 }
 

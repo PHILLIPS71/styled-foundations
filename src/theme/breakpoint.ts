@@ -1,8 +1,17 @@
-import type { Breakpoints, Theme } from '@/types'
+import type { Theme } from '@/theme/theme'
 
-const DEFAULT_BREAKPOINTS = ['768px', '1024px', '1216px', '1408px']
+export type Breakpoints = Record<string | number, string>
 
-export const getBreakpoints = (theme?: Theme): Breakpoints => {
+let CACHED_BREAKPOINTS: Breakpoints | null = null
+
+let CACHED_RAW_BREAKPOINTS_OBJECT: Record<string, string> | null = null
+
+const DEFAULT_BREAKPOINTS = ['768px', '1024px', '1216px', '1408px'].reduce<Breakpoints>((acc, cur, index) => {
+  acc[index] = cur
+  return acc
+}, {})
+
+const getUncachedBreakpoints = (theme?: Theme): Breakpoints => {
   if (theme == null) {
     return DEFAULT_BREAKPOINTS
   }
@@ -14,51 +23,57 @@ export const getBreakpoints = (theme?: Theme): Breakpoints => {
 
   if (Array.isArray(breakpoints)) {
     return breakpoints
+      .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
+      .reduce<Breakpoints>((acc, cur, index) => {
+        acc[index] = cur
+        return acc
+      }, {})
+  }
+
+  if (typeof breakpoints === 'object') {
+    // store the ordered raw state of the breakpoints using their existing keys as this is required to compare with incoming values
+    CACHED_RAW_BREAKPOINTS_OBJECT = Object.entries(breakpoints)
+      .sort((a, b) => parseInt(a[1], 10) - parseInt(b[1], 10))
+      .reduce<Breakpoints>(
+        (sorted, [key, value]) => ({
+          ...sorted,
+          [key]: value,
+        }),
+        {}
+      )
+
+    // return the breakpoints using the index as the key so we match the same key value pattern produce when an array is provided instead
+    return Object.entries(CACHED_RAW_BREAKPOINTS_OBJECT).reduce<Breakpoints>(
+      (sorted, [, value], index) => ({
+        ...sorted,
+        [index]: value,
+      }),
+      {}
+    )
   }
 
   return breakpoints
 }
 
-export const getBreakpoint = (value: string | number, breakpoints: Breakpoints): string | null => {
-  switch (typeof value) {
-    case 'number':
-      if (!Array.isArray(breakpoints)) {
-        return Object.keys(breakpoints)[value]
-      }
-
-      return breakpoints[value]
-    case 'string':
-      if (Array.isArray(breakpoints)) {
-        console.error('You attempted to get a breakpoint by a named value where the theme has an array')
-        return null
-      }
-
-      return breakpoints[value]
-    default:
-      return null
-  }
-}
-
-export const getOrderedBreakpoints = (breakpoints: Breakpoints): Breakpoints => {
-  if (Array.isArray(breakpoints)) {
-    return breakpoints.sort()
+export const getBreakpoints = (theme?: Theme): Breakpoints => {
+  if (CACHED_BREAKPOINTS !== null) {
+    return CACHED_BREAKPOINTS
   }
 
-  return Object.entries(breakpoints)
-    .sort((a, b) => parseInt(a[1], 10) - parseInt(b[1], 10))
-    .reduce(
-      (sorted, [k, v]) => ({
-        ...sorted,
-        [k]: v,
-      }),
-      {}
-    )
+  CACHED_BREAKPOINTS = getUncachedBreakpoints(theme)
+  return CACHED_BREAKPOINTS
 }
 
-export const getOrderedBreakpointStyles = (value: Record<string, unknown>, theme?: Theme): Record<string, unknown> => {
-  const breakpoints = getOrderedBreakpoints(getBreakpoints(theme))
+export const getOrderedBreakpointValues = (value: Record<string, unknown>, theme?: Theme): Record<string, unknown> => {
+  if (CACHED_RAW_BREAKPOINTS_OBJECT == null) {
+    getBreakpoints(theme)
 
-  const keys = Object.keys(breakpoints)
+    if (CACHED_RAW_BREAKPOINTS_OBJECT == null) {
+      throw new Error('A breakpoint of type object is null and was not found in the theme.')
+    }
+  }
+
+  const keys = Object.keys(CACHED_RAW_BREAKPOINTS_OBJECT)
   return Object.entries(value)
     .sort((a, b) => keys.indexOf(a[0]) - keys.indexOf(b[0]))
     .reduce(

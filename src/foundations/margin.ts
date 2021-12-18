@@ -1,92 +1,104 @@
-import type { ResponsiveValue } from '@/types'
+import type { FoundationConfig } from '@/primitives/foundation'
+import type { ResponsivePropValue } from '@/types'
 
 import foundation from '@/primitives/foundation'
 
+const options: Record<string, FoundationConfig<any>> = {
+  top: {
+    prop: ['marginTop', 'mt'],
+    properties: {
+      marginTop: {
+        theme: 'space',
+      },
+    },
+  },
+  right: {
+    prop: ['marginRight', 'mr'],
+    properties: {
+      marginRight: {
+        theme: 'space',
+      },
+    },
+  },
+  bottom: {
+    prop: ['marginBottom', 'mb'],
+    properties: {
+      marginBottom: {
+        theme: 'space',
+      },
+    },
+  },
+  left: {
+    prop: ['marginLeft', 'ml'],
+    properties: {
+      marginLeft: {
+        theme: 'space',
+      },
+    },
+  },
+  x: {
+    prop: ['marginX', 'mx'],
+    properties: {
+      marginLeft: {
+        theme: 'space',
+      },
+      marginRight: {
+        theme: 'space',
+      },
+    },
+  },
+  y: {
+    prop: ['marginY', 'my'],
+    properties: {
+      marginTop: {
+        theme: 'space',
+      },
+      marginBottom: {
+        theme: 'space',
+      },
+    },
+  },
+}
+
 export type MarginProps = {
-  m?: ResponsiveValue
-  margin?: ResponsiveValue
+  marginTop?: ResponsivePropValue<string>
+  mt?: ResponsivePropValue<string>
+
+  marginRight?: ResponsivePropValue<string>
+  mr?: ResponsivePropValue<string>
+
+  marginBottom?: ResponsivePropValue<string>
+  mb?: ResponsivePropValue<string>
+
+  marginLeft?: ResponsivePropValue<string>
+  ml?: ResponsivePropValue<string>
+
+  marginX?: ResponsivePropValue<string>
+  mx?: ResponsivePropValue<string>
+
+  marginY?: ResponsivePropValue<string>
+  my?: ResponsivePropValue<string>
 }
 
-export const margin = foundation({
-  prop: ['m', 'margin'],
-  properties: {
-    marginTop: true,
-    marginRight: true,
-    marginBottom: true,
-    marginLeft: true,
+export const margin = foundation([
+  {
+    ...options.top,
   },
-})
-
-export type MarginXProps = {
-  mx?: ResponsiveValue
-  marginX?: ResponsiveValue
-}
-
-export const marginX = foundation({
-  prop: ['mx', 'marginX'],
-  properties: {
-    marginLeft: true,
-    marginRight: true,
+  {
+    ...options.right,
   },
-})
-
-export type MarginYProps = {
-  my?: ResponsiveValue
-  marginY?: ResponsiveValue
-}
-
-export const marginY = foundation({
-  prop: ['my', 'marginY'],
-  properties: {
-    marginTop: true,
-    marginBottom: true,
+  {
+    ...options.bottom,
   },
-})
-
-export type MarginTopProps = {
-  mt?: ResponsiveValue
-  marginTop?: ResponsiveValue
-}
-
-export const marginTop = foundation({
-  prop: ['mt', 'marginTop'],
-  properties: {
-    marginTop: true,
+  {
+    ...options.left,
   },
-})
-
-export type MarginRightProps = {
-  mr?: ResponsiveValue
-  marginRight?: ResponsiveValue
-}
-
-export const marginRight = foundation({
-  prop: ['mr', 'marginRight'],
-  properties: {
-    marginRight: true,
+  {
+    ...options.x,
   },
-})
-
-export type MarginBottomProps = {
-  mb?: ResponsiveValue
-  marginBottom?: ResponsiveValue
-}
-
-export const marginBottom = foundation({
-  prop: ['mb', 'marginBottom'],
-  properties: {
-    marginBottom: true,
+  {
+    ...options.y,
   },
-})
+])
 
-export type MarginLeftProps = {
-  my?: ResponsiveValue
-  marginY?: ResponsiveValue
-}
-
-export const marginLeft = foundation({
-  prop: ['ml', 'marginLeft'],
-  properties: {
-    marginLeft: true,
-  },
-})
+export default options

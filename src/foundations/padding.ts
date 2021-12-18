@@ -1,92 +1,104 @@
-import type { ResponsiveValue } from '@/types'
+import type { FoundationConfig } from '@/primitives/foundation'
+import type { ResponsivePropValue } from '@/types'
 
 import foundation from '@/primitives/foundation'
 
+const options: Record<string, FoundationConfig<any>> = {
+  top: {
+    prop: ['paddingTop', 'pt'],
+    properties: {
+      paddingTop: {
+        theme: 'space',
+      },
+    },
+  },
+  right: {
+    prop: ['paddingRight', 'pr'],
+    properties: {
+      paddingRight: {
+        theme: 'space',
+      },
+    },
+  },
+  bottom: {
+    prop: ['paddingBottom', 'pb'],
+    properties: {
+      paddingBottom: {
+        theme: 'space',
+      },
+    },
+  },
+  left: {
+    prop: ['paddingLeft', 'pl'],
+    properties: {
+      paddingLeft: {
+        theme: 'space',
+      },
+    },
+  },
+  x: {
+    prop: ['paddingX', 'px'],
+    properties: {
+      paddingLeft: {
+        theme: 'space',
+      },
+      paddingRight: {
+        theme: 'space',
+      },
+    },
+  },
+  y: {
+    prop: ['paddingY', 'py'],
+    properties: {
+      paddingTop: {
+        theme: 'space',
+      },
+      paddingBottom: {
+        theme: 'space',
+      },
+    },
+  },
+}
+
 export type PaddingProps = {
-  p?: ResponsiveValue
-  padding?: ResponsiveValue
+  paddingTop?: ResponsivePropValue<string>
+  pt?: ResponsivePropValue<string>
+
+  paddingRight?: ResponsivePropValue<string>
+  pr?: ResponsivePropValue<string>
+
+  paddingBottom?: ResponsivePropValue<string>
+  pb?: ResponsivePropValue<string>
+
+  paddingLeft?: ResponsivePropValue<string>
+  pl?: ResponsivePropValue<string>
+
+  paddingX?: ResponsivePropValue<string>
+  px?: ResponsivePropValue<string>
+
+  paddingY?: ResponsivePropValue<string>
+  py?: ResponsivePropValue<string>
 }
 
-export const padding = foundation({
-  prop: ['p', 'padding'],
-  properties: {
-    paddingTop: true,
-    paddingRight: true,
-    paddingBottom: true,
-    paddingLeft: true,
+export const padding = foundation([
+  {
+    ...options.top,
   },
-})
-
-export type PaddingXProps = {
-  px?: ResponsiveValue
-  paddingX?: ResponsiveValue
-}
-
-export const paddingX = foundation({
-  prop: ['px', 'paddingX'],
-  properties: {
-    paddingLeft: true,
-    paddingRight: true,
+  {
+    ...options.right,
   },
-})
-
-export type PaddingYProps = {
-  py?: ResponsiveValue
-  paddingY?: ResponsiveValue
-}
-
-export const paddingY = foundation({
-  prop: ['py', 'paddingY'],
-  properties: {
-    paddingTop: true,
-    paddingBottom: true,
+  {
+    ...options.bottom,
   },
-})
-
-export type PaddingTopProps = {
-  pt?: ResponsiveValue
-  paddingTop?: ResponsiveValue
-}
-
-export const paddingTop = foundation({
-  prop: ['pt', 'paddingTop'],
-  properties: {
-    paddingTop: true,
+  {
+    ...options.left,
   },
-})
-
-export type PaddingRightProps = {
-  pr?: ResponsiveValue
-  paddingRight?: ResponsiveValue
-}
-
-export const paddingRight = foundation({
-  prop: ['pr', 'paddingRight'],
-  properties: {
-    paddingRight: true,
+  {
+    ...options.y,
   },
-})
-
-export type PaddingBottomProps = {
-  pb?: ResponsiveValue
-  paddingBottom?: ResponsiveValue
-}
-
-export const paddingBottom = foundation({
-  prop: ['pb', 'paddingBottom'],
-  properties: {
-    paddingBottom: true,
+  {
+    ...options.x,
   },
-})
+])
 
-export type PaddingLeftProps = {
-  py?: ResponsiveValue
-  paddingY?: ResponsiveValue
-}
-
-export const paddingLeft = foundation({
-  prop: ['pl', 'paddingLeft'],
-  properties: {
-    paddingLeft: true,
-  },
-})
+export default options

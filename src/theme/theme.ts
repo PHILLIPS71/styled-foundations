@@ -1,28 +1,28 @@
-import type { Theme } from '@/types'
+import type { Breakpoints } from '@/theme/breakpoint'
 
-export const getTheme = (props: any): Theme | undefined => {
-  if (props.theme) {
-    return props.theme as Theme
-  }
-
-  return undefined
+export type Theme = {
+  breakpoints?: Breakpoints
 }
 
-export function getThemeValue<T = unknown>(theme: Theme, path: string | number, fallback?: T): T {
-  const key = typeof path === 'string' ? path.split('.') : [path]
+// eslint-disable-next-line import/prefer-default-export
+export const getThemeValue = (path: string, value: string | number, theme?: any): string | number | null => {
+  if (theme == null) {
+    return null
+  }
 
-  let value: any = theme
+  let lookup = theme
+  const key = typeof path === 'string' ? path.split('.') : [path]
   for (let i = 0; i < key.length; i += 1) {
-    if (!value) {
+    if (lookup == null) {
       break
     }
 
-    value = value[key[i]]
+    lookup = lookup[key[i] as keyof Theme]
   }
 
-  if (value === undefined && fallback) {
-    return fallback
+  if (lookup == null) {
+    return value
   }
 
-  return value
+  return lookup[value as keyof Theme]
 }

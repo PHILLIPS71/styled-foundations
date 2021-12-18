@@ -1,9 +1,10 @@
+import type { ResponsivePropValue } from '@/types'
 import type { Property } from 'csstype'
 
 import foundation from '@/primitives/foundation'
 
 export type DisplayProps = {
-  display?: Array<Property.Display> | Property.Display
+  display?: ResponsivePropValue<Property.Display>
 }
 
 export const display = foundation({

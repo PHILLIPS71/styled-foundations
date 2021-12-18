@@ -1,45 +1,26 @@
-import type { CSSObject, Responsive, ResponsiveValue } from '@/types'
+import type { ParserConfig } from '@/parser'
 
-import Parser from '@/parser'
-import { getOrderedBreakpointStyles } from '@/theme/breakpoint'
-import { getTheme } from '@/theme/theme'
+import { Parser } from '@/parser'
 
-type VariantArgs<V extends string | number> = {
-  prop?: string
+type VariantConfig<V extends string | number> = ParserConfig & {
   variants: {
-    [K in V]: Array<CSSObject> | CSSObject
+    [K in V]: Record<string, any>
   }
 }
 
-const variant = <V extends string, S = any>(args: VariantArgs<V>) => {
-  const parse = (value: ResponsiveValue, props: any): Responsive<CSSObject> => {
-    if (typeof value !== 'string' && typeof value !== 'number') {
-      console.error(`Invalid variant type provided ${typeof value} was expecting a string or number`)
-      return []
+const variant = <V extends string | number>(options: VariantConfig<V> | Array<VariantConfig<V>>) => {
+  const parse = (index: number, value: any): Record<string, any> => {
+    const variants = Array.isArray(options) ? options[index].variants : options.variants
+
+    if (!Object.keys(variants).includes(value.toString())) {
+      console.warn(`Invalid variant provided ${value} was expecting one of ${Object.keys(variants).join(', ')}`)
     }
 
-    if (!Object.keys(args.variants).includes(value.toString())) {
-      console.error(`Invalid variant provided ${value} was expecting one of ${Object.keys(args.variants).join(', ')}`)
-      return []
-    }
-
-    const theme = getTheme(props)
-    const used = args.variants[value as V]
-    if (Array.isArray(used)) {
-      return used
-    }
-
-    const values: Responsive<CSSObject> = []
-    const ordered = getOrderedBreakpointStyles(used, theme)
-
-    Object.keys(ordered).forEach((breakpoint) => {
-      values.push(ordered[breakpoint] as CSSObject)
-    })
-
-    return values
+    return variants[value as keyof typeof variants]
   }
 
-  const parser = new Parser<S>(parse, args.prop || 'variant')
+  const variants = Array.isArray(options) ? options : [options]
+  const parser = new Parser<Array<VariantConfig<V>>>(variants, parse)
   return parser.parse
 }
 
