@@ -7,14 +7,12 @@
   <p align="center">
     A foundation of primitive building blocks for rapid component design and development
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/PHILLIPS71/styled-foundations"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">Code Sandbox</a>
+    <a href="https://github.com/PHILLIPS71/styled-foundations/issues">Bug Report</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Bug Report</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Feature Request</a>
+    <a href="https://github.com/PHILLIPS71/styled-foundations/issues">Feature Request</a>
   </p>
 </div>
 
@@ -285,7 +283,7 @@ const Button = styled.button`
 - [ ] improve documentation
 - [ ] add unit tests
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/PHILLIPS71/styled-foundations/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
