@@ -66,12 +66,10 @@ export class Parser<T extends ParserConfig | Array<ParserConfig>> {
           const isSupplyingZeroBreakpoint = values.length === Object.keys(breakpoints).length + 1
           const idx = isSupplyingZeroBreakpoint ? breakpointIndex - 1 : breakpointIndex
 
-          // add styles with no media query where exactly 1 extra breakpoint has been provided
+          // add styles with no media query on the first breakpoint index
           if (breakpointIndex === 0) {
-            if (isSupplyingZeroBreakpoint) {
-              styles.push({ ...parsed })
-              return
-            }
+            styles.push({ ...parsed })
+            return
           }
 
           // do not process any undefined breakpoints

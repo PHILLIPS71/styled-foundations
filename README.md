@@ -238,7 +238,7 @@ const Block = styled.div<BlockProps>`
   ${padding}
 `
 
-// component usage
+// example component usage
 <Block my="10px" px="5px" />
 ```
 
