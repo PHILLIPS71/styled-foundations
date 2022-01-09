@@ -4,6 +4,14 @@ import type { ResponsivePropValue } from '@/types'
 import foundation from '@/primitives/foundation'
 
 const options: Record<string, FoundationConfig<any>> = {
+  all: {
+    prop: ['margin', 'm'],
+    properties: {
+      margin: {
+        theme: 'space',
+      },
+    },
+  },
   top: {
     prop: ['marginTop', 'mt'],
     properties: {
@@ -61,6 +69,9 @@ const options: Record<string, FoundationConfig<any>> = {
 }
 
 export type MarginProps = {
+  margin?: ResponsivePropValue<string>
+  m?: ResponsivePropValue<string>
+
   marginTop?: ResponsivePropValue<string>
   mt?: ResponsivePropValue<string>
 
@@ -81,6 +92,9 @@ export type MarginProps = {
 }
 
 export const margin = foundation([
+  {
+    ...options.all,
+  },
   {
     ...options.top,
   },

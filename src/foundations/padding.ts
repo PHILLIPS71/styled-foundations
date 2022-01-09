@@ -4,6 +4,14 @@ import type { ResponsivePropValue } from '@/types'
 import foundation from '@/primitives/foundation'
 
 const options: Record<string, FoundationConfig<any>> = {
+  all: {
+    prop: ['padding', 'p'],
+    properties: {
+      padding: {
+        theme: 'space',
+      },
+    },
+  },
   top: {
     prop: ['paddingTop', 'pt'],
     properties: {
@@ -61,6 +69,9 @@ const options: Record<string, FoundationConfig<any>> = {
 }
 
 export type PaddingProps = {
+  padding?: ResponsivePropValue<string>
+  p?: ResponsivePropValue<string>
+
   paddingTop?: ResponsivePropValue<string>
   pt?: ResponsivePropValue<string>
 
@@ -81,6 +92,9 @@ export type PaddingProps = {
 }
 
 export const padding = foundation([
+  {
+    ...options.all,
+  },
   {
     ...options.top,
   },
