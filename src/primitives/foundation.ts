@@ -1,5 +1,4 @@
-import type { ParserConfig } from '@/parser'
-import type { Theme } from '@/theme/theme'
+import type { ParserConfig, ParserFn } from '@/parser'
 import type { CSSProperties, Paths } from '@/types'
 
 import { Parser } from '@/parser'
@@ -17,7 +16,7 @@ export type FoundationConfig<T> = ParserConfig & {
 }
 
 const foundation = <T>(options: FoundationConfig<T> | Array<FoundationConfig<T>>) => {
-  const parse = (index: number, value: any, theme?: Theme): Record<string, any> => {
+  const parse: ParserFn = (index, value, theme) => {
     const styles: Record<string, any> = {}
 
     const properties = Array.isArray(options) ? options[index].properties : options.properties

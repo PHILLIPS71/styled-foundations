@@ -1,4 +1,4 @@
-import type { ParserConfig } from '@/parser'
+import type { ParserConfig, ParserFn } from '@/parser'
 
 import { Parser } from '@/parser'
 
@@ -9,7 +9,7 @@ type VariantConfig<V extends string | number> = ParserConfig & {
 }
 
 const variant = <V extends string | number>(options: VariantConfig<V> | Array<VariantConfig<V>>) => {
-  const parse = (index: number, value: any): Record<string, any> => {
+  const parse: ParserFn = (index, value) => {
     const variants = Array.isArray(options) ? options[index].variants : options.variants
 
     if (!Object.keys(variants).includes(value.toString())) {

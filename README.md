@@ -272,6 +272,41 @@ const Button = styled.button`
 <Button shape="round" />
 ```
 
+### Conditional
+
+The conditional foundation is used to colocate all your toggleable props in a single area, where they are no longer sporadically defined across a complex component with all the odd formatting they induce. You simply define either the success styles (if the condition passes where it is true), or any failure styles that could otherwise occur.
+
+```tsx
+export type ButtonProps = {
+  wide?: boolean
+  disabled?: boolean
+}
+
+
+const conditionals = conditional({
+  success: {
+    wide: {
+      width: '100%',
+    },
+    disabled: {
+      opacity: 0.6,
+    },
+  },
+  failure: {
+    disabled: {
+      opacity: 1
+    }
+  }
+})
+
+const Button = styled.button<ButtonProps>`
+  ${conditionals}
+`
+
+// example component usage
+<Button wide disabled />
+```
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ROADMAP -->
