@@ -217,12 +217,13 @@ const padding = foundation([
 
 There currently are a few already prebuilt foundations you can use, I do plan to extend upon these! Here are a few you can directly import into your projects. The props are all optional and support both longhand names and shorthand names.
 
-| name    | props                                                                            | theme  | type         |
-| ------- | -------------------------------------------------------------------------------- | ------ | ------------ |
-| margin  | margin, m, mt, marginTop, mr, marginRight, mb, marginBottom, ml, marginLeft      | space  | MarginProps  |
-| padding | padding, p, pt, paddingTop, pr, paddingRight, pb, paddingBottom, pl, paddingLeft | space  | PaddingProps |
-| color   | color, colour, bg, backgoundColor                                                | colors | ColorProps   |
-| display | display                                                                          |        | DisplayProps |
+| name     | props                                                                            | theme  | type          |
+| -------- | -------------------------------------------------------------------------------- | ------ | ------------- |
+| color    | color, colour, bg, backgoundColor                                                | colors | ColorProps    |
+| display  | display                                                                          |        | DisplayProps  |
+| margin   | margin, m, mt, marginTop, mr, marginRight, mb, marginBottom, ml, marginLeft      | space  | MarginProps   |
+| padding  | padding, p, pt, paddingTop, pr, paddingRight, pb, paddingBottom, pl, paddingLeft | space  | PaddingProps  |
+| position | position                                                                         |        | PositionProps |
 
 ##### Example Usage
 

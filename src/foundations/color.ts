@@ -3,14 +3,6 @@ import type { ResponsivePropValue } from '@/types'
 
 import foundation from '@/primitives/foundation'
 
-export type ColorProps = {
-  color?: ResponsivePropValue<string>
-  colour?: ResponsivePropValue<string>
-
-  backgroundColor?: ResponsivePropValue<string>
-  bg?: ResponsivePropValue<string>
-}
-
 const options: Record<string, FoundationConfig<any>> = {
   color: {
     prop: ['color', 'colour'],
@@ -28,6 +20,14 @@ const options: Record<string, FoundationConfig<any>> = {
       },
     },
   },
+}
+
+export type ColorProps = {
+  color?: ResponsivePropValue<string>
+  colour?: ResponsivePropValue<string>
+
+  backgroundColor?: ResponsivePropValue<string>
+  bg?: ResponsivePropValue<string>
 }
 
 export const color = foundation([
