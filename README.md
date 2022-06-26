@@ -217,13 +217,16 @@ const padding = foundation([
 
 There currently are a few already prebuilt foundations you can use, I do plan to extend upon these! Here are a few you can directly import into your projects. The props are all optional and support both longhand names and shorthand names.
 
-| name     | props                                                                            | theme  | type          |
-| -------- | -------------------------------------------------------------------------------- | ------ | ------------- |
-| color    | color, colour, bg, backgoundColor                                                | colors | ColorProps    |
-| display  | display                                                                          |        | DisplayProps  |
-| margin   | margin, m, mt, marginTop, mr, marginRight, mb, marginBottom, ml, marginLeft      | space  | MarginProps   |
-| padding  | padding, p, pt, paddingTop, pr, paddingRight, pb, paddingBottom, pl, paddingLeft | space  | PaddingProps  |
-| position | position                                                                         |        | PositionProps |
+| name       | props                                                                                                                                  | theme     | type           |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------- | -------------- |
+| color      | color, colour, bg, backgoundColor                                                                                                      | colors    | ColorProps     |
+| display    | display                                                                                                                                |           | DisplayProps   |
+| flex       | flex, flexBasis, flexDirection, flexFlow, flexGrow, flexShrink, flexWrap, alignContent, alignItems, alignSelf, gridGap, justifyContent | FlexProps |
+| layout     | height, minHeight, maxHeight, width, minWidth, maxWidth, overflow, overflowX, overflowY, size                                          | space     | LayoutProps    |
+| margin     | margin, m, mt, marginTop, mr, marginRight, mb, marginBottom, ml, marginLeft                                                            | space     | MarginProps    |
+| padding    | padding, p, pt, paddingTop, pr, paddingRight, pb, paddingBottom, pl, paddingLeft                                                       | space     | PaddingProps   |
+| position   | position                                                                                                                               |           | PositionProps  |
+| text align | textAlign                                                                                                                              |           | TextAlignProps |
 
 ##### Example Usage
 
@@ -278,7 +281,7 @@ const Button = styled.button`
 The conditional foundation is used to colocate all your toggleable props in a single area, where they are no longer sporadically defined across a complex component with all the odd formatting they induce. You simply define either the success styles (if the condition passes where it is true), or any failure styles that could otherwise occur.
 
 ```tsx
-export type ButtonProps = {
+type ButtonProps = {
   wide?: boolean
   disabled?: boolean
 }
