@@ -10,8 +10,8 @@ export const getThemeValue = (path: string, value: string | number, theme?: any)
     return null
   }
 
-  let lookup = theme
-  const key = typeof path === 'string' ? path.split('.') : [path]
+  let lookup = theme[path]
+  const key = typeof value === 'string' ? value.split('.') : [value]
   for (let i = 0; i < key.length; i += 1) {
     if (lookup == null) {
       break
@@ -24,5 +24,5 @@ export const getThemeValue = (path: string, value: string | number, theme?: any)
     return value
   }
 
-  return lookup[value as keyof Theme]
+  return lookup
 }
